@@ -20,17 +20,28 @@ header {
     margin: 0;
 }
 
-.top {
+.profile {
     position: absolute;
     top: 20px;
     right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.top a {
-    color: white;
+.profile img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.profile a {
+    color: black;
     text-decoration: none;
     font-family: verdana;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
 }
 
