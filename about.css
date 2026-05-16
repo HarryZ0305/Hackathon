@@ -18,6 +18,7 @@ header {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-color: rgb(218, 226, 240);;
     min-height: 600px;
     display: flex;
     flex-direction: column;
