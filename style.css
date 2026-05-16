@@ -114,14 +114,18 @@ button:active {
 }
 
 .mission-section {
-    padding: 80px 60px;
+    padding: 80px 60px 80px;
     background-color: white;
     color: rgb(51, 67, 80);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 60px;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.mission-text h2 {
+    margin-top: 0;
 }
 
 .mission-text {
@@ -148,8 +152,10 @@ button:active {
 
 .mission-section h2 {
     font-family: "Cormorant Garamond", serif;
-    font-size: 45px;
-    margin-bottom: 20px;
+    font-size: 72px;
+    font-weight: 500;
+    margin: 0 0 20px;
+    line-height: 1.1;
 }
 
 .mission-section p {
