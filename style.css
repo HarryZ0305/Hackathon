@@ -50,7 +50,8 @@ header h1 {
 }
 
 h1 {
-    color: lightcoral;
+    color: rgb(51, 67, 80);
+    font-size: 50px;
     text-align: center; 
 }
 
