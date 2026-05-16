@@ -64,6 +64,13 @@ header h1 + h1 {
     font-family: verdana;
     font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.profile a:hover{
+    color: rgb(71, 90, 105);
+    text-decoration: underline;
 }
 
 h1 {
