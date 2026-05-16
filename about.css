@@ -13,9 +13,6 @@ html, body {
 header {
     position: relative;
     width: 100%;
-    background-image:
-        linear-gradient(to bottom, rgba(255,255,255,0) 60%, rgba(255,255,255,1) 100%),
-        url("src/background.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -30,24 +27,26 @@ header {
 
 
 details {
-    font-size: large
+    font-size: large;
 }
 
 
-summary {
-    font-size: large
+.education summary {
+    font-size: large;
+    right: 60px;
 }
-summary {
-    font-size: large
+.experience summary {
+    font-size: large;
+    left: 200px;
 }
-summary {
-    font-size: large
+.skills summary {
+    font-size: large;
 }
-summary {
-    font-size: large
+.interests summary {
+    font-size: large;
 }
 
 
 p {
-    font-size: medium
+    font-size: medium;
 }
