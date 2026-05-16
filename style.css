@@ -112,3 +112,24 @@ button:active {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(51, 67, 80, 0.25);
 }
+
+.mission-section {
+    padding: 100px 20px; 
+    text-align: center;
+    background-color: white; 
+    color: rgb(51, 67, 80);
+}
+
+.mission-section h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+.mission-section p {
+    font-family: verdana;
+    font-size: 22px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
