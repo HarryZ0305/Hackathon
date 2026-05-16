@@ -4,8 +4,9 @@ body {
 }
 
 header {
+    position: relative;
     width: 100%;
-    background-image: 
+    background-image:
         linear-gradient(to bottom, rgba(255,255,255,0) 60%, rgba(255,255,255,1) 100%),
         url("src/background.jpg");
     background-repeat: no-repeat;
@@ -14,9 +15,27 @@ header {
     height: 400px;
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     padding: 60px 20px;
     margin: 0;
+}
+
+.top {
+    position: absolute;
+    top: 20px;
+    right: 60px;
+}
+
+.top a {
+    color: white;
+    text-decoration: none;
+    font-family: verdana;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.top a:hover {
+    color: lightcoral;
 }
 
 h1 {
