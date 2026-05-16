@@ -6,6 +6,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+<<<<<<< HEAD
 }
 
 header {
@@ -38,3 +39,6 @@ p {
     font-size: medium
 }
 
+=======
+}
+>>>>>>> e307cdfa0f8c45b86f49c2acc6178835276b8325
