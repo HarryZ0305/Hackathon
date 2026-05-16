@@ -8,3 +8,33 @@ html, body {
     overflow-x: hidden;
 }
 
+header {
+    position: relative;
+    width: 100%;
+    background-image:
+        linear-gradient(to bottom, rgba(255,255,255,0) 60%, rgba(255,255,255,1) 100%),
+        url("src/background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10% 20px 60px;
+    margin: 0;
+}
+
+details {
+    font-size: large
+}
+
+summary {
+    font-size: large
+}
+
+p {
+    font-size: medium
+}
+
