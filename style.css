@@ -75,10 +75,6 @@ header h1 + h1 {
     color: rgb(71, 90, 105);
 }
 
-.profile:hover span {
-    text-decoration: underline;
-}
-
 h1 {
     color: rgb(51, 67, 80);
     font-size: 50px;
