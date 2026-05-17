@@ -164,6 +164,7 @@ previousButton.addEventListener('click', function() {
             opportunities = parsed;
             index = 0;
             render();
+            document.getElementById('saveBtn').style.display = 'block';
         }
     } catch (err) {
         console.error('Failed to fetch opportunities:', err);
