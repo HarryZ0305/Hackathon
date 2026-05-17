@@ -69,6 +69,7 @@ header h1 + h1 {
     font-family: verdana;
     font-size: 20px;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .profile:hover {
