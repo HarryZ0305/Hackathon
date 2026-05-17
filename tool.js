@@ -40,7 +40,7 @@ function buildPrompt(profile) {
     const skills = arrify(profile.skills).join(', ') || 'unspecified';
     const interests = arrify(profile.interests).join(', ') || 'unspecified';
 
-    return `You are an opportunity matcher for students. Given the student profile below,
+    return `You are an opportunity matcher for me. Given my profile below,
 recommend 5 real, relevant opportunities (competitions, summer programs, internships,
 scholarships, hackathons, volunteer roles, or clubs) that fit them.
 
@@ -72,7 +72,7 @@ const content = document.getElementById('content');
 let opportunities = [{
     title: 'Loading...',
     data: 'Fetching recommendations',
-    description: 'Asking Gemini for opportunities tailored to your profile.'
+    description: 'Searching for opportunities tailored to your profile.'
 }];
 let index = 0;
 
