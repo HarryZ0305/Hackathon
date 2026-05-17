@@ -180,7 +180,8 @@ body {
 
 .save-btn {
     display: block;
-    margin: 20px auto 0 auto;
+    width: fit-content;
+    margin: 30px auto 20px auto; 
     padding: 12px 28px;
     background-color: var(--card-solid);
     color: var(--navy);
