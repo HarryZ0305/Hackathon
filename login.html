@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NextOccasion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <main class="login-wrapper">
+        <h1 id="formTitle">Welcome Back</h1>
+        <p class="subtitle" id="formSubtitle">Sign in to continue</p>
+
+        <form id="loginForm" class="login-form">
+            <label>
+                Email
+                <input type="email" id="email" required autocomplete="email">
+            </label>
+            <label>
+                Password
+                <input type="password" id="password" required autocomplete="current-password" minlength="6">
+            </label>
+            <p class="error" id="errorMsg"></p>
+            <button type="submit" id="submitBtn">Log In</button>
+        </form>
+
+        <p class="switch-mode">
+            <span id="switchPrompt">Don't have an account?</span>
+            <a href="#" id="switchLink">Sign up</a>
+        </p>
+    </main>
+
+    <script type="module" src="login.js"></script>
+</body>
+</html>
