@@ -2,7 +2,7 @@ import { db } from './firebase.js';
 import { ref, get }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const GEMINI_API_KEY = 'AIzaSyD528ZLpj7BageBvFPdFC8rcnQMCXmXFKw';
+const GEMINI_API_KEY = 'AIzaSyBkcAiYal6RCOKDJMGj_L-_MZvRmj5txeE';
 const GEMINI_MODEL = 'gemini-2.5-flash';
 
 async function askGemini(prompt) {
@@ -14,7 +14,7 @@ async function askGemini(prompt) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             contents: [{ parts: [{ text: prompt }] }],
-            tools: [{ google_search: {} }]
+            generationConfig: { responseMimeType: 'application/json' }
         })
     });
 
@@ -53,20 +53,19 @@ function buildPrompt(profile) {
 
     const zip = (profile.zipCode || '').trim();
 
-    return `You are an opportunity matcher for me. Use Google Search to find 5 REAL, currently
-open or upcoming opportunities (competitions, summer programs, internships, scholarships,
-hackathons, volunteer roles, clubs, or events) that fit my profile below. Do NOT invent
-opportunities — every one must be a real event verified via search results.
+    return `You are an opportunity matcher for me. Recommend 5 relevant opportunities
+(competitions, summer programs, internships, scholarships, hackathons, volunteer roles,
+clubs, or events) that fit my profile below. Prefer well-known, recurring programs that
+are likely to actually exist.
 
-${zip ? `LOCATION PRIORITY: My ZIP code is ${zip}. Use Google Search to identify the city/region
-this ZIP code is in, and prefer in-person opportunities within driving distance. At least 3 of
-the 5 must be in-person near ${zip}; up to 2 may be online.` :
+${zip ? `LOCATION PRIORITY: My ZIP code is ${zip}. Identify the city/region this ZIP is in,
+and prefer in-person opportunities within driving distance. At least 3 of the 5 should be
+in-person near ${zip}; up to 2 may be online.` :
 'No ZIP code provided — opportunities can be anywhere or online.'}
 
-Return ONLY a JSON array (wrapped in \`\`\`json ... \`\`\` fence is fine). Each item must have
-EXACTLY these three string fields:
-- "title": the real program / event name
-- "data": format as "Month Date • City, State" for in-person, or "Month Date • Online" for virtual. Use the actual published date.
+Return ONLY a JSON array. Each item must have EXACTLY these three string fields:
+- "title": the program / event name
+- "data": format as "Month Date • City, State" for in-person, or "Month Date • Online" for virtual. Use a realistic upcoming date.
 - "description": 2-3 sentences written in SECOND PERSON addressed to me (use "you" and "your", never "he/she/the student"). Explain what the opportunity is and why YOU would be a good fit.
 
 Do not include any other prose outside the JSON.
