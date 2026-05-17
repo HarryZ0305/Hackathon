@@ -63,30 +63,56 @@ header h1 + h1 {
     font-weight: 500;
 }
 
-/* NAV */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(218,226,240,0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center;
-      padding: 0 32px; height: 58px; gap: 16px;
-    }
-    nav a.logo {
-      font-family: var(--serif);
-      font-size: 22px; font-weight: 500;
-      color: var(--navy); text-decoration: none;
-      margin-right: auto; letter-spacing: 0.3px;
-    }
-    nav a.nav-link {
-      font-size: 14px; font-weight: 400;
-      color: var(--navy-mid); text-decoration: none;
-      padding: 6px 14px; border-radius: 999px;
-      transition: background 0.18s;
-    }
-    nav a.nav-link:hover { background: var(--chip); }
-    nav a.nav-link.active { background: var(--navy); color: white; }
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+header h1 {
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+header h1#future {
+    opacity: 0; 
+    animation: fadeUp 0.8s ease-out 0.2s forwards; 
+}
+
+#homeButton {
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.4s forwards; 
+}
+
+nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(218,226,240,0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 32px; height: 58px; gap: 16px;
+}
+
+nav a.logo {
+    font-family: var(--serif);
+    font-size: 22px; font-weight: 500;
+    color: var(--navy); text-decoration: none;
+    margin-right: auto; letter-spacing: 0.3px;
+}
+    
+nav a.nav-link {
+    font-size: 14px; font-weight: 400;
+    color: var(--navy-mid); text-decoration: none;
+    padding: 6px 14px; border-radius: 999px;
+    transition: background 0.18s;
+}
+
+nav a.nav-link:hover { 
+    background: var(--chip); 
+}
+
+nav a.nav-link.active { 
+    background: var(--navy); color: white; 
+}
 
 .profile {
     position: absolute;
