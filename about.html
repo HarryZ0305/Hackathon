@@ -120,7 +120,17 @@
 
 <div class="toast" id="toast">Profile saved ✓</div>
 
-<script>
+<script type="module">
+  import { db } from './firebase.js';
+  import { ref, get, set }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const username = sessionStorage.getItem('username');
+  if (!username) {
+    window.location.href = 'login.html?redirect=about.html';
+  }
+  const userRef = ref(db, 'users/' + username);
+
   let profile = {
     fullName:'', gradeYear:'', bio:'',
     education:[], experience:[],
@@ -128,10 +138,31 @@
   };
   let modalType = null;
 
+  function arrify(v) {
+    if (Array.isArray(v)) return v;
+    if (v && typeof v === 'object') return Object.values(v);
+    return [];
+  }
+
   /* ── LOAD ── */
-  (function load() {
-    const raw = localStorage.getItem('nextOccasionProfile');
-    if (raw) profile = JSON.parse(raw);
+  (async function load() {
+    try {
+      const snap = await get(userRef);
+      if (snap.exists()) {
+        const data = snap.val();
+        profile = {
+          fullName: data.fullName || '',
+          gradeYear: data.gradeYear || '',
+          bio: data.bio || '',
+          education: arrify(data.education),
+          experience: arrify(data.experience),
+          skills: arrify(data.skills),
+          interests: arrify(data.interests)
+        };
+      }
+    } catch (err) {
+      console.error('Load failed:', err);
+    }
     document.getElementById('fullName').value  = profile.fullName  || '';
     document.getElementById('gradeYear').value = profile.gradeYear || '';
     document.getElementById('bioText').value   = profile.bio       || '';
@@ -143,7 +174,7 @@
   })();
 
   /* ── SAVE ── */
-  function saveAll() {
+  async function saveAll() {
     profile.fullName  = document.getElementById('fullName').value.trim();
     profile.gradeYear = document.getElementById('gradeYear').value.trim();
     profile.bio       = document.getElementById('bioText').value.trim();
@@ -158,9 +189,25 @@
       });
     });
 
-    localStorage.setItem('nextOccasionProfile', JSON.stringify(profile));
-    toast();
+    try {
+      await set(userRef, {
+        username: username,
+        fullName: profile.fullName,
+        gradeYear: profile.gradeYear,
+        bio: profile.bio,
+        education: profile.education,
+        experience: profile.experience,
+        skills: profile.skills,
+        interests: profile.interests,
+        updatedAt: Date.now()
+      });
+      toast();
+    } catch (err) {
+      console.error('Save failed:', err);
+      alert('Save failed: ' + err.message);
+    }
   }
+  window.saveAll = saveAll;
 
   function toast() {
     const el = document.getElementById('toast');
@@ -339,6 +386,17 @@
     if (e.key === 'Escape') closeModal();
     if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') submitModal();
   });
+
+  // Expose to window so inline onclick/oninput attributes can find them
+  window.updateHero  = updateHero;
+  window.openModal   = openModal;
+  window.closeModal  = closeModal;
+  window.bgClick     = bgClick;
+  window.submitModal = submitModal;
+  window.deleteEntry = deleteEntry;
+  window.addChip     = addChip;
+  window.removeChip  = removeChip;
+  window.chipKeydown = chipKeydown;
 </script>
 </body>
 </html>

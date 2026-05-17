@@ -22,7 +22,24 @@ async function askGemini(prompt) {
     return json.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 }
 
+function arrify(v) {
+    if (Array.isArray(v)) return v;
+    if (v && typeof v === 'object') return Object.values(v);
+    return [];
+}
+
 function buildPrompt(profile) {
+    const eduList = arrify(profile.education).map(function(e) {
+        return '  • ' + [e.school, e.degree, e.start, e.end, e.gpa, e.desc].filter(Boolean).join(' | ');
+    }).join('\n') || '  (none)';
+
+    const expList = arrify(profile.experience).map(function(e) {
+        return '  • ' + [e.role, e.org, e.type, e.start, e.end, e.desc].filter(Boolean).join(' | ');
+    }).join('\n') || '  (none)';
+
+    const skills = arrify(profile.skills).join(', ') || 'unspecified';
+    const interests = arrify(profile.interests).join(', ') || 'unspecified';
+
     return `You are an opportunity matcher for students. Given the student profile below,
 recommend 5 real, relevant opportunities (competitions, summer programs, internships,
 scholarships, hackathons, volunteer roles, or clubs) that fit them.
@@ -38,10 +55,12 @@ Student profile:
 - Name: ${profile.fullName || 'unspecified'}
 - Grade / Year: ${profile.gradeYear || 'unspecified'}
 - Bio: ${profile.bio || 'unspecified'}
-- Education: ${profile.education || 'unspecified'}
-- Experience: ${profile.experience || 'unspecified'}
-- Skills: ${profile.skills || 'unspecified'}
-- Interests: ${profile.interests || 'unspecified'}`;
+- Education:
+${eduList}
+- Experience:
+${expList}
+- Skills: ${skills}
+- Interests: ${interests}`;
 }
 
 const titleElement = document.getElementById('title');
