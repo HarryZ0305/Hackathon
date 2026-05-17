@@ -2,7 +2,7 @@ import { db } from './firebase.js';
 import { ref, get }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const GEMINI_API_KEY = 'AIzaSyBkcAiYal6RCOKDJMGj_L-_MZvRmj5txeE';
+const GEMINI_API_KEY = 'AIzaSyAr5_zd9gCNhpAk9M7jbH2HnaExICgflYE';
 const GEMINI_MODEL = 'gemini-2.5-flash';
 
 async function askGemini(prompt) {
@@ -19,6 +19,10 @@ async function askGemini(prompt) {
     });
 
     const json = await res.json();
+    if (!res.ok) {
+        console.error('Gemini API error', res.status, json);
+        throw new Error('Gemini API ' + res.status + ': ' + (json.error?.message || 'unknown'));
+    }
     return json.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 }
 
