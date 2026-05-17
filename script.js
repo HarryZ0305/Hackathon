@@ -37,3 +37,18 @@ btn.addEventListener('click', async function() {
 
     window.location.href = isIncomplete(data) ? 'about.html' : 'tool.html';
 });
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('scrolled-in');
+            observer.unobserve(entry.target);
+        }
+    });
+}, { 
+    threshold: 0.15
+});
+
+document.querySelectorAll('.zoom-on-scroll').forEach(el => {
+    observer.observe(el);
+});
