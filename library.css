@@ -1,0 +1,28 @@
+.empty {
+    text-align: center;
+    color: var(--navy-mid);
+    font-size: 18px;
+    margin-top: 40px;
+    font-family: var(--sans);
+}
+
+.delete-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn:hover {
+    background: rgba(168, 50, 50, 0.1); 
+    color: var(--danger); 
+}
