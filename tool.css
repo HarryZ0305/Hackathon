@@ -177,3 +177,24 @@ body {
     animation: pulse 1.5s infinite ease-in-out;
     color: var(--muted);
 }
+
+.save-btn {
+    display: block;
+    margin: 20px auto 0 auto;
+    padding: 12px 28px;
+    background-color: var(--card-solid);
+    color: var(--navy);
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.save-btn:hover {
+    background-color: var(--navy);
+    color: white;
+    transform: translateY(-2px);
+}
