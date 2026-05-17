@@ -41,8 +41,9 @@ body {
 }
 
 .back-btn {
-    display: inline-block;
-    margin-top: 10px;
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
     padding: 12px 28px;
     background-color: rgb(51, 67, 80);
     color: white;
