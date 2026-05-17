@@ -67,6 +67,7 @@ const titleElement = document.getElementById('title');
 const dataElement = document.getElementById('data');
 const descriptionElement = document.getElementById('description');
 const nextButton = document.getElementById('nextBtn');
+const previousButton = document.getElementById('prevBtn');
 const content = document.getElementById('content');
 
 let opportunities = [{
@@ -94,6 +95,16 @@ nextButton.addEventListener('click', function() {
     }, 300);
 });
 
+previousButton.addEventListener('click', function() {
+    content.className = 'slide-next';
+    setTimeout(function() {
+        index = (index - 1 + opportunities.length) % opportunities.length;
+        render();
+        content.className = 'slide-left';
+        setTimeout(function() { content.className = 'visible'; }, 50);
+    }, 300);
+});
+
 (async function init() {
     const username = sessionStorage.getItem('username');
     if (!username) {
@@ -109,7 +120,9 @@ nextButton.addEventListener('click', function() {
         const reply = await askGemini(prompt);
         console.log('Gemini raw reply:', reply);
 
-        const parsed = JSON.parse(reply);
+        const clean = reply.replace(/```json/gi, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(clean); 
+
         if (Array.isArray(parsed) && parsed.length > 0) {
             opportunities = parsed;
             index = 0;

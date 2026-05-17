@@ -79,6 +79,27 @@ body {
     transform: translateY(-2px);
 }
 
+.prev-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px; 
+    padding: 12px 28px;
+    background-color: rgb(51, 67, 80); 
+    color: white;
+    border: none;
+    border-radius: 999px; 
+    font-family: inherit; 
+    font-size: 16px; 
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.prev-btn:hover {
+    background-color: rgb(71, 90, 105);
+    transform: translateY(-2px);
+}
+
 .visible {
     opacity: 1;
     transform: translateX(0);
