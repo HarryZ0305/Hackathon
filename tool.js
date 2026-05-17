@@ -52,27 +52,40 @@ function buildPrompt(profile) {
     const interests = arrify(profile.interests).join(', ') || 'unspecified';
 
     const zip = (profile.zipCode || '').trim();
+    const state = (profile.state || '').trim();
+
+    const now = new Date();
+    const today = now.toISOString().slice(0, 10);
+    const twoWeeks = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000)
+        .toISOString().slice(0, 10);
 
     return `You are an opportunity matcher for me. Recommend 5 relevant opportunities
 (competitions, summer programs, internships, scholarships, hackathons, volunteer roles,
 clubs, or events) that fit my profile below. Prefer well-known, recurring programs that
 are likely to actually exist.
 
-${zip ? `LOCATION PRIORITY: My ZIP code is ${zip}. Identify the city/region this ZIP is in,
-and prefer in-person opportunities within driving distance. At least 3 of the 5 should be
-in-person near ${zip}; up to 2 may be online.` :
-'No ZIP code provided — opportunities can be anywhere or online.'}
+DEADLINE CONSTRAINT (very important): Today is ${today}. Only include opportunities whose
+APPLICATION DEADLINE (not event date) falls between today and ${twoWeeks} (the next 14
+days, inclusive). Skip anything whose application window has already closed or whose
+deadline is more than 2 weeks away. The "data" field below must reflect the APPLICATION
+DEADLINE, not the event date.
+
+${zip || state ? `LOCATION PRIORITY: ${state ? `I'm in ${state}.` : ''} ${zip ? `My ZIP code is ${zip}.` : ''}
+Prefer in-person opportunities within driving distance of ${zip || state}. At least 3 of
+the 5 should be in-person in/near ${zip || state}; up to 2 may be online.` :
+'No location provided — opportunities can be anywhere or online.'}
 
 Return ONLY a JSON array. Each item must have EXACTLY these three string fields:
 - "title": the program / event name
-- "data": format as "Month Date • City, State" for in-person, or "Month Date • Online" for virtual. Use a realistic upcoming date.
-- "description": 2-3 sentences written in SECOND PERSON addressed to me (use "you" and "your", never "he/she/the student"). Explain what the opportunity is and why YOU would be a good fit.
+- "data": format as "Apply by Month Date • City, State" for in-person, or "Apply by Month Date • Online" for virtual. The date must be the APPLICATION DEADLINE and must fall within the next 14 days from ${today}.
+- "description": 2-3 sentences written in SECOND PERSON addressed to me (use "you" and "your", never "he/she/the student"). Explain what the opportunity is, when the event takes place, and why YOU would be a good fit.
 
 Do not include any other prose outside the JSON.
 
 My profile:
 - Name: ${profile.fullName || 'unspecified'}
 - Grade / Year: ${profile.gradeYear || 'unspecified'}
+- State: ${state || 'unspecified'}
 - ZIP Code: ${zip || 'unspecified'}
 - Bio: ${profile.bio || 'unspecified'}
 - Education:
