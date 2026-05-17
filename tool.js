@@ -1,7 +1,7 @@
 import { db } from './firebase.js';
 import { ref, get }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import { GEMINI_API_KEY } from './config.example.js';
+import { GEMINI_API_KEY } from './config.js';
 
 const GEMINI_MODEL = 'gemini-2.5-flash';
 
