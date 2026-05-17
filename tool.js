@@ -104,16 +104,16 @@ const previousButton = document.getElementById('prevBtn');
 const content = document.getElementById('content');
 
 let opportunities = [{
-    title: 'Loading...',
-    data: 'Fetching recommendations',
-    description: 'Searching for opportunities tailored to your profile.'
+    title: 'Analyzing Profile...',
+    data: 'Searching for matches...',
+    description: '<span class="loading-skeleton">Finding the best matches in your area...</span>'
 }];
 let index = 0;
 
 function render() {
     titleElement.textContent = opportunities[index].title;
     dataElement.textContent = opportunities[index].data;
-    descriptionElement.textContent = opportunities[index].description;
+    descriptionElement.innerHTML = opportunities[index].description;
 }
 
 render();
