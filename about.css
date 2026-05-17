@@ -25,7 +25,6 @@
       color: var(--navy);
     }
 
-    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: rgba(218,226,240,0.88);
@@ -50,7 +49,6 @@
     nav a.nav-link:hover { background: var(--chip); }
     nav a.nav-link.active { background: var(--navy); color: white; }
 
-    /* HERO */
     .hero {
       background: linear-gradient(135deg, #c8d6ea 0%, #dae2f0 60%, #e4eaf5 100%);
       border-bottom: 1px solid var(--border);
@@ -76,7 +74,6 @@
     .hero-text p { font-size: 15px; color: var(--muted); margin-top: 6px; }
     .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
-    /* BUTTONS */
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 10px 22px; border-radius: 999px;
@@ -89,10 +86,8 @@
     .btn-ghost { background: var(--chip); color: var(--navy); border: 1px solid var(--border-med); }
     .btn-ghost:hover { background: var(--chip-hover); }
 
-    /* LAYOUT */
     .page { max-width: 860px; margin: 0 auto; padding: 36px 24px 80px; }
 
-    /* SECTION CARD */
     .section-card {
       background: var(--card);
       backdrop-filter: blur(8px);
@@ -119,7 +114,6 @@
     }
     .add-btn:hover { background: var(--chip-hover); }
 
-    /* ENTRIES */
     .entries { display: flex; flex-direction: column; gap: 14px; }
     .entry {
       background: var(--card-solid);
@@ -201,7 +195,6 @@
     }
     .chip-add-btn:hover { background: var(--navy-mid); }
 
-    /* TEXTAREA */
     .context-textarea {
       width: 100%; min-height: 100px;
       font-family: var(--sans); font-size: 15px;
@@ -213,7 +206,6 @@
     .context-textarea:focus { border-color: var(--navy); }
     .context-textarea::placeholder { color: var(--muted); opacity: 0.65; }
 
-    /* GRID 2-col */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .inline-field { display: flex; flex-direction: column; gap: 5px; }
     .inline-input {
@@ -226,13 +218,11 @@
     .inline-input:focus { border-color: var(--navy); }
     .inline-input::placeholder { color: var(--muted); opacity: 0.65; }
 
-    /* EMPTY */
     .empty {
       text-align: center; padding: 22px 0 8px;
       color: var(--muted); font-size: 14px; font-style: italic;
     }
 
-    /* TOAST */
     .toast {
       position: fixed; bottom: 28px; left: 50%;
       transform: translateX(-50%) translateY(20px);
@@ -245,7 +235,6 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* MODAL */
     .modal-bg {
       display: none; position: fixed; inset: 0;
       background: rgba(30,46,58,0.38); z-index: 200;

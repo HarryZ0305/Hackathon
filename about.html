@@ -34,7 +34,6 @@
 
 <div class="page">
 
-  <!-- ABOUT ME -->
   <div class="section-card">
     <div class="section-header">
       <span class="section-title">About Me</span>
@@ -59,7 +58,6 @@
     </div>
   </div>
 
-  <!-- EDUCATION -->
   <div class="section-card">
     <div class="section-header">
       <span class="section-title">Education</span>
@@ -69,7 +67,6 @@
     <p class="empty" id="educationEmpty">No education added yet - click Add to get started.</p>
   </div>
 
-  <!-- EXPERIENCE -->
   <div class="section-card">
     <div class="section-header">
       <span class="section-title">Experiences</span>
@@ -79,7 +76,6 @@
     <p class="empty" id="experienceEmpty">No experiences added yet - internships, clubs, volunteering, jobs…</p>
   </div>
 
-  <!-- SKILLS -->
   <div class="section-card">
     <div class="section-header">
       <span class="section-title">Skills</span>
@@ -92,7 +88,6 @@
     </div>
   </div>
 
-  <!-- INTERESTS -->
   <div class="section-card">
     <div class="section-header">
       <span class="section-title">Interests</span>
@@ -111,7 +106,6 @@
 
 </div>
 
-<!-- MODAL -->
 <div class="modal-bg" id="modalBg" onclick="bgClick(event)">
   <div class="modal">
     <h2 id="modalTitle">Add Education</h2>
@@ -149,7 +143,6 @@
     return [];
   }
 
-  /* ── LOAD ── */
   (async function load() {
     try {
       const snap = await get(userRef);
@@ -180,14 +173,12 @@
     renderChips('interests');
   })();
 
-  /* ── SAVE ── */
   async function saveAll() {
     profile.fullName  = document.getElementById('fullName').value.trim();
     profile.gradeYear = document.getElementById('gradeYear').value.trim();
     profile.zipCode   = document.getElementById('zipCode').value.trim();
     profile.bio       = document.getElementById('bioText').value.trim();
 
-    // collect inline edits
     ['education','experience'].forEach(type => {
       document.querySelectorAll('#' + type + 'List .entry').forEach((el, i) => {
         if (!profile[type][i]) return;
@@ -223,7 +214,6 @@
     setTimeout(() => el.classList.remove('show'), 2200);
   }
 
-  /* ── HERO ── */
   function updateHero() {
     const name  = document.getElementById('fullName').value.trim();
     const grade = document.getElementById('gradeYear').value.trim();
@@ -237,7 +227,6 @@
     document.getElementById('avatarInitials').textContent = initials;
   }
 
-  /* ── ENTRY LISTS ── */
   const iconEdu = `<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 9l10 6 10-6-10-6z"/><path d="M2 9v6"/><path d="M6 11.5v4.5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-4.5"/></svg>`;
   const iconExp = `<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`;
 
@@ -395,7 +384,6 @@
     if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') submitModal();
   });
 
-  // Expose to window so inline onclick/oninput attributes can find them
   window.updateHero  = updateHero;
   window.openModal   = openModal;
   window.closeModal  = closeModal;
