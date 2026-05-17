@@ -28,28 +28,19 @@ header {
 }
 
 h1 {
-    align-items: center;
+    text-align: center;
+    margin: 0 0 30px;
 }
 
 details {
     font-size: large;
+    text-align: left;
+    margin-bottom: 12px;
 }
 
-
-.education summary {
+summary {
     font-size: large;
-    align-items: left;
-}
-.experience summary {
-    font-size: large;
-    align-items: left;
-}
-.skills summary {
-    font-size: large;
-    
-}
-.interests summary {
-    font-size: large;
+    cursor: pointer;
 }
 
 
