@@ -13,40 +13,34 @@ html, body {
 header {
     position: relative;
     width: 100%;
-
-
+    height: 100%;
+    font-family: "Cormorant Garamond", serif;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     background-color: rgb(218, 226, 240);;
-    min-height: 600px;
+    min-height: 695px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
     padding: 10% 20px 60px;
     margin: 0;
 }
 
+h1 {
+    text-align: center;
+    margin: 0 0 30px;
+}
 
 details {
     font-size: large;
+    text-align: left;
+    margin-bottom: 12px;
 }
 
-
-.education summary {
+summary {
     font-size: large;
-    right: 60px;
-}
-.experience summary {
-    font-size: large;
-    left: 200px;
-}
-.skills summary {
-    font-size: large;
-}
-.interests summary {
-    font-size: large;
+    cursor: pointer;
 }
 
 
