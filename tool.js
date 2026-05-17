@@ -4,7 +4,6 @@ import { ref, get, update }
 import { GEMINI_API_KEY } from './config.js';
 
 const GEMINI_MODEL = 'gemini-2.5-flash';
-const a;
 
 async function askGemini(prompt) {
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/'
