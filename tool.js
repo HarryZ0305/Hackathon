@@ -40,10 +40,10 @@ nextButton.addEventListener('click', function() {
         dataElement.textContent = opportunities[index].data;
         descriptionElement.textContent = opportunities[index].description;
 
-        cardContent.className = 'slide-next';
+        content.className = 'slide-next';
 
         setTimeout(function() {
-            cardContent.className = 'visible';
+            content.className = 'visible';
         }, 50);
     }, 300);
 });
