@@ -1,5 +1,5 @@
 import { db } from './firebase.js';
-import { ref, get }
+import { ref, get, update }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { GEMINI_API_KEY } from './config.js';
 
@@ -174,3 +174,42 @@ previousButton.addEventListener('click', function() {
         render();
     }
 })();
+
+const saveButton = document.getElementById('saveBtn');
+
+saveButton.addEventListener('click', async function() {
+    const username = sessionStorage.getItem('username');
+    if (!username) return;
+
+    const currentEvent = opportunities[index];
+    
+    saveButton.textContent = "Saving...";
+    saveButton.disabled = true;
+
+    try {
+        const userRef = ref(db, 'users/' + username);
+        const snap = await get(userRef);
+        const profile = snap.exists() ? snap.val() : {};
+        
+        let savedEvents = profile.savedEvents || [];
+        if (!Array.isArray(savedEvents)) savedEvents = Object.values(savedEvents);
+
+        const alreadySaved = savedEvents.find(e => e.title === currentEvent.title);
+        
+        if (!alreadySaved) {
+            savedEvents.push(currentEvent);
+            await update(userRef, { savedEvents: savedEvents });
+            saveButton.textContent = "Saved ✓";
+        } else {
+            saveButton.textContent = "Already Saved";
+        }
+    } catch (err) {
+        console.error("Error saving event:", err);
+        saveButton.textContent = "Error";
+    }
+
+    setTimeout(() => {
+        saveButton.textContent = "Save to Library";
+        saveButton.disabled = false;
+    }, 2000);
+});
