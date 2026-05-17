@@ -24,7 +24,7 @@
 
 html, body {
   min-height: 100vh;
-  background: var(--bg);
+  background: white;
   font-family: var(--sans);
   color: var(--navy);
   margin: 0;
