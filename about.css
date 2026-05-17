@@ -52,7 +52,7 @@
 
     /* HERO */
     .hero {
-      background: linear-gradient(135deg, #c8d6ea 0%, #dae2f0 60%, #e4eaf5 100%);
+      background: linear-gradient(135deg, #c8d6ea 0%, #d6dfed 60%, #e4eaf5 100%);
       border-bottom: 1px solid var(--border);
       padding: 48px 32px 40px;
       display: flex; align-items: center; gap: 28px;
@@ -119,8 +119,7 @@
     }
     .add-btn:hover { background: var(--chip-hover); }
 
-    /* ENTRIES */
-    .entries { display: flex; flex-direction: column; gap: 14px; }
+    .entries { display: flex; flex-direction: column; gap: 15px; }
     .entry {
       background: var(--card-solid);
       border: 1px solid var(--border);
