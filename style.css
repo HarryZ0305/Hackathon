@@ -213,3 +213,10 @@ button:active {
     margin: 0;
 }
 
+.mission-logo {
+    display: block;
+    margin-top: 30px;
+    width: 180px;
+    height: auto;
+}
+
