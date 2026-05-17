@@ -11,26 +11,22 @@
 </head>
 <body>
     <main class="login-wrapper">
-        <h1 id="formTitle">Welcome Back</h1>
-        <p class="subtitle" id="formSubtitle">Sign in to continue</p>
+        <h1>Welcome</h1>
+        <p class="subtitle">Log in or create an account</p>
 
         <form id="loginForm" class="login-form">
             <label>
-                Email
-                <input type="email" id="email" required autocomplete="email">
+                Username
+                <input type="text" id="username" required autocomplete="username">
             </label>
             <label>
                 Password
-                <input type="password" id="password" required autocomplete="current-password" minlength="6">
+                <input type="password" id="password" required autocomplete="current-password">
             </label>
             <p class="error" id="errorMsg"></p>
-            <button type="submit" id="submitBtn">Log In</button>
+            <button type="submit" id="submitBtn">Continue</button>
         </form>
-
-        <p class="switch-mode">
-            <span id="switchPrompt">Don't have an account?</span>
-            <a href="#" id="switchLink">Sign up</a>
-        </p>
+        <p class="hint">New username will be registered automatically.</p>
     </main>
 
     <script type="module" src="login.js"></script>

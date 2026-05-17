@@ -24,16 +24,28 @@ const descriptionElement = document.getElementById('description');
 
 const nextButton = document.getElementById('nextBtn');
 
+const content = document.getElementById('content');
+
 nextButton.addEventListener('click', function() {
     
-    index++;
-    if (index >= opportunities.length) {
-        index = 0;
-    }
+    content.className = 'slide-left';
+    setTimeout(function() {
+
+        index++;
+        if (index >= opportunities.length) {
+            index = 0;
+        }
     
-    titleElement.textContent = opportunities[index].title;
-    dataElement.textContent = opportunities[index].data;
-    descriptionElement.textContent = opportunities[index].description;
+        titleElement.textContent = opportunities[index].title;
+        dataElement.textContent = opportunities[index].data;
+        descriptionElement.textContent = opportunities[index].description;
+
+        cardContent.className = 'slide-next';
+
+        setTimeout(function() {
+            cardContent.className = 'visible';
+        }, 50);
+    }, 300);
 });
 
 titleElement.textContent = opportunities[index].title;
