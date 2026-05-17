@@ -1,28 +1,75 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: rgb(218, 226, 240);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; 
-    font-family: verdana, sans-serif;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #dae2f0;
+  --bg-deep:    #c5d1e4;
+  --navy:       #334350;
+  --navy-mid:   #475a69;
+  --navy-light: #6b8396;
+  --card:       rgba(255,255,255,0.75);
+  --card-solid: #ffffff;
+  --border:     rgba(51,67,80,0.13);
+  --border-med: rgba(51,67,80,0.22);
+  --chip:       rgba(51,67,80,0.10);
+  --chip-hover: rgba(51,67,80,0.18);
+  --muted:      #5a7080;
+  --danger:     #a83232;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans:  "DM Sans", system-ui, sans-serif;
 }
 
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: var(--sans);
+  color: var(--navy);
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(218,226,240,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 32px; height: 58px; gap: 16px;
+}
+nav a.logo {
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 500;
+  color: var(--navy); text-decoration: none;
+  margin-right: auto; letter-spacing: 0.3px;
+}
+nav a.nav-link {
+  font-size: 14px; font-weight: 400;
+  color: var(--navy-mid); text-decoration: none;
+  padding: 6px 14px; border-radius: 999px;
+  transition: background 0.18s;
+}
+nav a.nav-link:hover { background: var(--chip); }
+nav a.nav-link.active { background: var(--navy); color: white; }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
 .event-box {
-    background-color: #ffffff;
-    border: 2px solid rgb(51, 67, 80); 
+    background-color: var(--card-solid);
+    border: 1px solid var(--border); 
     border-radius: 16px;
     padding: 40px;
     max-width: 500px;
     width: 90%;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(51, 67, 80, 0.15); 
+    box-shadow: 0 10px 30px rgba(51, 67, 80, 0.15);
+    margin: auto;
 }
 
 .event-box h1 {
-    font-family: "Cormorant Garamond", serif;
-    color: rgb(51, 67, 80);
+    font-family: var(--serif);
+    color: var(--navy);
     font-size: 42px;
     margin-top: 0;
     margin-bottom: 10px;
@@ -37,7 +84,7 @@ body {
 
 .event-label {
     font-weight: bold;
-    color: rgb(51, 67, 80);
+    color: var(--navy);
 }
 
 .back-btn {
@@ -45,7 +92,7 @@ body {
     width: fit-content;
     margin: 20px auto;
     padding: 12px 28px;
-    background-color: rgb(51, 67, 80);
+    background-color: var(--navy);
     color: white;
     text-decoration: none;
     border-radius: 999px;
@@ -54,7 +101,7 @@ body {
 }
 
 .back-btn:hover {
-    background-color: rgb(71, 90, 105);
+    background-color: var(--navy-mid);
     transform: translateY(-2px);
 }
 
@@ -63,11 +110,11 @@ body {
     bottom: 30px;
     right: 30px;
     padding: 12px 28px;
-    background-color: rgb(51, 67, 80); 
+    background-color: var(--navy); 
     color: white;
     border: none;
     border-radius: 999px; 
-    font-family: inherit; 
+    font-family: var(--sans); 
     font-size: 16px; 
     font-weight: bold;
     cursor: pointer;
@@ -75,7 +122,7 @@ body {
 }
 
 .next-btn:hover {
-    background-color: rgb(71, 90, 105);
+    background-color: var(--navy-mid);
     transform: translateY(-2px);
 }
 
@@ -84,11 +131,11 @@ body {
     bottom: 30px;
     left: 30px; 
     padding: 12px 28px;
-    background-color: rgb(51, 67, 80); 
+    background-color: var(--navy); 
     color: white;
     border: none;
     border-radius: 999px; 
-    font-family: inherit; 
+    font-family: var(--sans); 
     font-size: 16px; 
     font-weight: bold;
     cursor: pointer;
@@ -96,7 +143,7 @@ body {
 }
 
 .prev-btn:hover {
-    background-color: rgb(71, 90, 105);
+    background-color: var(--navy-mid);
     transform: translateY(-2px);
 }
 
