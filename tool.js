@@ -141,8 +141,7 @@ previousButton.addEventListener('click', function() {
         const reply = await askGemini(prompt);
         console.log('Gemini raw reply:', reply);
 
-        const clean = reply.replace(/```json/gi, '').replace(/```/g, '').trim();
-        const parsed = JSON.parse(clean); 
+        const parsed = extractJsonArray(reply);
 
         if (Array.isArray(parsed) && parsed.length > 0) {
             opportunities = parsed;
