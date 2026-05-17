@@ -40,20 +40,28 @@ function buildPrompt(profile) {
     const skills = arrify(profile.skills).join(', ') || 'unspecified';
     const interests = arrify(profile.interests).join(', ') || 'unspecified';
 
-    return `You are an opportunity matcher for students. Given the student profile below,
+    const zip = (profile.zipCode || '').trim();
+
+    return `You are an opportunity matcher for me. Given my profile below,
 recommend 5 real, relevant opportunities (competitions, summer programs, internships,
-scholarships, hackathons, volunteer roles, or clubs) that fit them.
+scholarships, hackathons, volunteer roles, or clubs) that fit me.
+
+${zip ? `LOCATION PRIORITY: My ZIP code is ${zip}. Strongly prefer opportunities that are physically
+located within driving distance of this ZIP code (same city, county, or metro area). It is fine
+to include 1-2 online opportunities, but at least 3 of the 5 must be in-person near ${zip}.` :
+'No ZIP code provided — opportunities can be anywhere or online.'}
 
 Return ONLY a JSON array. Each item must have EXACTLY these three string fields:
 - "title": the program / event name
-- "data": format as "Month Date • City, State" or "Month Date • Online" (use a realistic upcoming date)
-- "description": 2-3 sentences explaining what it is and why it fits this student
+- "data": format as "Month Date • City, State" (for in-person, use the actual city near my ZIP) or "Month Date • Online" (use a realistic upcoming date)
+- "description": 2-3 sentences explaining what it is and why it fits me
 
 Do not include any other text, markdown, or explanation outside the JSON.
 
-Student profile:
+My profile:
 - Name: ${profile.fullName || 'unspecified'}
 - Grade / Year: ${profile.gradeYear || 'unspecified'}
+- ZIP Code: ${zip || 'unspecified'}
 - Bio: ${profile.bio || 'unspecified'}
 - Education:
 ${eduList}
@@ -73,7 +81,7 @@ const content = document.getElementById('content');
 let opportunities = [{
     title: 'Loading...',
     data: 'Fetching recommendations',
-    description: 'Asking Gemini for opportunities tailored to your profile.'
+    description: 'Searching for opportunities tailored to your profile.'
 }];
 let index = 0;
 

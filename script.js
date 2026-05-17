@@ -3,7 +3,7 @@ import { ref, get }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const btn = document.getElementById('homeButton');
-const stringFields = ['fullName', 'gradeYear', 'bio'];
+const stringFields = ['fullName', 'gradeYear', 'zipCode', 'bio'];
 const arrayFields = ['education', 'experience', 'skills', 'interests'];
 
 const username = sessionStorage.getItem('username');

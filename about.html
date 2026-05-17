@@ -49,6 +49,10 @@
       </div>
     </div>
     <div class="inline-field">
+      <span class="field-label">ZIP Code</span>
+      <input class="inline-input" id="zipCode" placeholder="e.g. 10001" inputmode="numeric" maxlength="10">
+    </div>
+    <div class="inline-field">
       <span class="field-label">Bio / Additional Context</span>
       <textarea class="context-textarea" id="bioText" placeholder="Tell us about yourself - your goals, what drives you, anything that might help us find the right opportunities for you…"></textarea>
     </div>
@@ -132,7 +136,7 @@
   const userRef = ref(db, 'users/' + username);
 
   let profile = {
-    fullName:'', gradeYear:'', bio:'',
+    fullName:'', gradeYear:'', zipCode:'', bio:'',
     education:[], experience:[],
     skills:[], interests:[]
   };
@@ -153,6 +157,7 @@
         profile = {
           fullName: data.fullName || '',
           gradeYear: data.gradeYear || '',
+          zipCode: data.zipCode || '',
           bio: data.bio || '',
           education: arrify(data.education),
           experience: arrify(data.experience),
@@ -165,6 +170,7 @@
     }
     document.getElementById('fullName').value  = profile.fullName  || '';
     document.getElementById('gradeYear').value = profile.gradeYear || '';
+    document.getElementById('zipCode').value   = profile.zipCode   || '';
     document.getElementById('bioText').value   = profile.bio       || '';
     updateHero();
     renderList('education');
@@ -177,6 +183,7 @@
   async function saveAll() {
     profile.fullName  = document.getElementById('fullName').value.trim();
     profile.gradeYear = document.getElementById('gradeYear').value.trim();
+    profile.zipCode   = document.getElementById('zipCode').value.trim();
     profile.bio       = document.getElementById('bioText').value.trim();
 
     // collect inline edits
@@ -194,6 +201,7 @@
         username: username,
         fullName: profile.fullName,
         gradeYear: profile.gradeYear,
+        zipCode: profile.zipCode,
         bio: profile.bio,
         education: profile.education,
         experience: profile.experience,
