@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - NextOccasion</title>
-    <link rel="stylesheet" href="about.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextOccasion — Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="about.css">
+
 </head>
 <body>
-    <main>
-        <h1>Your Profile</h1>
 
-        <label>
-            Full Name
-            <input type="text" id="fullName">
-        </label>
+<nav>
+  <a href="index.html" class="logo">NextOccasion</a>
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="about.html" class="nav-link active">Profile</a>
+  <a href="tool.html" class="nav-link">Find Opportunities</a>
+</nav>
 
-<<<<<<< HEAD
 <div class="hero">
   <div class="avatar" id="avatarEl">
     <span id="avatarInitials">?</span>
@@ -26,48 +28,318 @@
   </div>
   <div class="hero-actions">
     <button class="btn btn-primary" onclick="saveAll()">Save Profile</button>
+    <a href="tool.html" class="btn btn-ghost">Find Opportunities →</a>
   </div>
 </div>
-=======
-        <label>
-            Grade / Year
-            <input type="text" id="gradeYear">
-        </label>
->>>>>>> 20f9898b4d4db9b30f991118359262b344676d26
 
-        <label>
-            Bio
-            <textarea id="bio" rows="3"></textarea>
-        </label>
+<div class="page">
 
-        <label>
-            Education
-            <textarea id="education" rows="4"></textarea>
-        </label>
+  <!-- ABOUT ME -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-title">About Me</span>
+    </div>
+    <div class="two-col">
+      <div class="inline-field">
+        <span class="field-label">Full Name</span>
+        <input class="inline-input" id="fullName" placeholder="e.g. Alex Johnson" oninput="updateHero()">
+      </div>
+      <div class="inline-field">
+        <span class="field-label">Grade / Year</span>
+        <input class="inline-input" id="gradeYear" placeholder="e.g. 11th Grade, Junior" oninput="updateHero()">
+      </div>
+    </div>
+    <div class="inline-field">
+      <span class="field-label">Bio / Additional Context</span>
+      <textarea class="context-textarea" id="bioText" placeholder="Tell us about yourself — your goals, what drives you, anything that might help us find the right opportunities for you…"></textarea>
+    </div>
+  </div>
 
-        <label>
-            Experience
-            <textarea id="experience" rows="4"></textarea>
-        </label>
+  <!-- EDUCATION -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-title">Education</span>
+      <button class="add-btn" onclick="openModal('education')">+ Add</button>
+    </div>
+    <div class="entries" id="educationList"></div>
+    <p class="empty" id="educationEmpty">No education added yet — click Add to get started.</p>
+  </div>
 
-        <label>
-            Skills
-            <textarea id="skills" rows="3"></textarea>
-        </label>
+  <!-- EXPERIENCE -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-title">Experiences</span>
+      <button class="add-btn" onclick="openModal('experience')">+ Add</button>
+    </div>
+    <div class="entries" id="experienceList"></div>
+    <p class="empty" id="experienceEmpty">No experiences added yet — internships, clubs, volunteering, jobs…</p>
+  </div>
 
-        <label>
-            Interests
-            <textarea id="interests" rows="3"></textarea>
-        </label>
+  <!-- SKILLS -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-title">Skills</span>
+    </div>
+    <div class="chips-area" id="skillsChips">
+      <div class="chip-input-wrap">
+        <input class="chip-input" id="skillInput" placeholder="Type a skill, press Enter…" onkeydown="chipKeydown(event,'skills')">
+        <button class="chip-add-btn" onclick="addChip('skills')" title="Add">+</button>
+      </div>
+    </div>
+  </div>
 
-        <div class="actions">
-            <button id="saveBtn">Save</button>
-            <button id="logoutBtn">Log Out</button>
-        </div>
+  <!-- INTERESTS -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-title">Interests</span>
+    </div>
+    <div class="chips-area" id="interestsChips">
+      <div class="chip-input-wrap">
+        <input class="chip-input" id="interestInput" placeholder="Type an interest, press Enter…" onkeydown="chipKeydown(event,'interests')">
+        <button class="chip-add-btn" onclick="addChip('interests')" title="Add">+</button>
+      </div>
+    </div>
+  </div>
 
-        <p id="status"></p>
-    </main>
+  <div style="text-align:center; margin-top:8px;">
+    <button class="btn btn-primary" style="font-size:16px; padding:13px 42px;" onclick="saveAll()">Save Profile</button>
+  </div>
 
-    <script type="module" src="about.js"></script>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="bgClick(event)">
+  <div class="modal">
+    <h2 id="modalTitle">Add Education</h2>
+    <div class="modal-fields" id="modalFields"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitModal()">Add</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Profile saved ✓</div>
+
+<script>
+  let profile = {
+    fullName:'', gradeYear:'', bio:'',
+    education:[], experience:[],
+    skills:[], interests:[]
+  };
+  let modalType = null;
+
+  /* ── LOAD ── */
+  (function load() {
+    const raw = localStorage.getItem('nextOccasionProfile');
+    if (raw) profile = JSON.parse(raw);
+    document.getElementById('fullName').value  = profile.fullName  || '';
+    document.getElementById('gradeYear').value = profile.gradeYear || '';
+    document.getElementById('bioText').value   = profile.bio       || '';
+    updateHero();
+    renderList('education');
+    renderList('experience');
+    renderChips('skills');
+    renderChips('interests');
+  })();
+
+  /* ── SAVE ── */
+  function saveAll() {
+    profile.fullName  = document.getElementById('fullName').value.trim();
+    profile.gradeYear = document.getElementById('gradeYear').value.trim();
+    profile.bio       = document.getElementById('bioText').value.trim();
+
+    // collect inline edits
+    ['education','experience'].forEach(type => {
+      document.querySelectorAll('#' + type + 'List .entry').forEach((el, i) => {
+        if (!profile[type][i]) return;
+        el.querySelectorAll('.field-input[data-key]').forEach(inp => {
+          profile[type][i][inp.dataset.key] = inp.value.trim();
+        });
+      });
+    });
+
+    localStorage.setItem('nextOccasionProfile', JSON.stringify(profile));
+    toast();
+  }
+
+  function toast() {
+    const el = document.getElementById('toast');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2200);
+  }
+
+  /* ── HERO ── */
+  function updateHero() {
+    const name  = document.getElementById('fullName').value.trim();
+    const grade = document.getElementById('gradeYear').value.trim();
+    document.getElementById('heroName').textContent = name || 'Your Profile';
+    document.getElementById('heroSub').textContent  = grade
+      ? grade + ' — Fill in your details so we can match you to the right opportunities.'
+      : 'Fill in your details so we can match you to the right opportunities.';
+    const initials = name
+      ? name.split(' ').filter(Boolean).map(w => w[0]).slice(0,2).join('').toUpperCase()
+      : '?';
+    document.getElementById('avatarInitials').textContent = initials;
+  }
+
+  /* ── ENTRY LISTS ── */
+  const iconEdu = `<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 9l10 6 10-6-10-6z"/><path d="M2 9v6"/><path d="M6 11.5v4.5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-4.5"/></svg>`;
+  const iconExp = `<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`;
+
+  function renderList(type) {
+    const list  = document.getElementById(type + 'List');
+    const empty = document.getElementById(type + 'Empty');
+    const items = profile[type];
+    list.innerHTML = '';
+    empty.style.display = items.length ? 'none' : 'block';
+    const isEdu = type === 'education';
+
+    items.forEach((item, idx) => {
+      const el = document.createElement('div');
+      el.className = 'entry';
+      el.innerHTML = `
+        <button class="entry-del" onclick="deleteEntry('${type}',${idx})" title="Remove">✕</button>
+        <div class="entry-top">
+          <div class="entry-icon">${isEdu ? iconEdu : iconExp}</div>
+          <div class="entry-fields">
+            <div class="entry-row">
+              <div class="field-group">
+                <span class="field-label">${isEdu ? 'School / Institution' : 'Role / Position'}</span>
+                <input class="field-input" data-key="${isEdu ? 'school':'role'}" value="${x(isEdu ? item.school : item.role)}" placeholder="${isEdu ? 'e.g. Lincoln High School':'e.g. Research Intern'}">
+              </div>
+              <div class="field-group">
+                <span class="field-label">${isEdu ? 'Degree / Program' : 'Organization'}</span>
+                <input class="field-input" data-key="${isEdu ? 'degree':'org'}" value="${x(isEdu ? item.degree : item.org)}" placeholder="${isEdu ? 'e.g. High School Diploma':'e.g. City Library'}">
+              </div>
+            </div>
+            <div class="entry-row">
+              <div class="field-group">
+                <span class="field-label">Start</span>
+                <input class="field-input" data-key="start" value="${x(item.start)}" placeholder="e.g. 2022">
+              </div>
+              <div class="field-group">
+                <span class="field-label">End (or "Present")</span>
+                <input class="field-input" data-key="end" value="${x(item.end)}" placeholder="e.g. 2026">
+              </div>
+            </div>
+            <div class="field-group">
+              <span class="field-label">Description</span>
+              <input class="field-input" data-key="desc" value="${x(item.desc)}" placeholder="${isEdu ? 'GPA, honors, relevant coursework…':'What you did and what you learned…'}">
+            </div>
+          </div>
+        </div>`;
+      list.appendChild(el);
+    });
+  }
+
+  function deleteEntry(type, idx) {
+    profile[type].splice(idx, 1);
+    renderList(type);
+  }
+
+  function x(s) { return s ? s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;') : ''; }
+
+  /* ── CHIPS ── */
+  function renderChips(type) {
+    const container = document.getElementById(type + 'Chips');
+    const inputWrap = container.querySelector('.chip-input-wrap');
+    container.innerHTML = '';
+    profile[type].forEach((val, idx) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.innerHTML = x(val) + `<button class="chip-del" onclick="removeChip('${type}',${idx})" title="Remove">×</button>`;
+      container.appendChild(chip);
+    });
+    container.appendChild(inputWrap);
+  }
+
+  function addChip(type) {
+    const id  = type === 'skills' ? 'skillInput' : 'interestInput';
+    const val = document.getElementById(id).value.trim();
+    if (!val || profile[type].includes(val)) { document.getElementById(id).value=''; return; }
+    profile[type].push(val);
+    document.getElementById(id).value = '';
+    renderChips(type);
+  }
+
+  function removeChip(type, idx) {
+    profile[type].splice(idx, 1);
+    renderChips(type);
+  }
+
+  function chipKeydown(e, type) {
+    if (e.key === 'Enter') { e.preventDefault(); addChip(type); }
+  }
+
+  /* ── MODAL ── */
+  const MODAL_DEFS = {
+    education: [
+      { key:'school', label:'School / Institution', placeholder:'e.g. Lincoln High School', span:2 },
+      { key:'degree', label:'Degree / Program',      placeholder:'e.g. High School Diploma' },
+      { key:'gpa',    label:'GPA / Honors',           placeholder:'e.g. 3.9 / Valedictorian' },
+      { key:'start',  label:'Start Year',             placeholder:'e.g. 2022' },
+      { key:'end',    label:'End Year',               placeholder:'e.g. 2026 or Present' },
+      { key:'desc',   label:'Relevant Coursework / Notes', placeholder:'AP CS, Biology, Math team…', span:2 },
+    ],
+    experience: [
+      { key:'role',   label:'Role / Position',  placeholder:'e.g. Research Intern',    span:2 },
+      { key:'org',    label:'Organization',      placeholder:'e.g. City Library' },
+      { key:'type',   label:'Type',              placeholder:'e.g. Internship, Club, Volunteer' },
+      { key:'start',  label:'Start',             placeholder:'e.g. Jun 2024' },
+      { key:'end',    label:'End',               placeholder:'e.g. Aug 2024 or Present' },
+      { key:'desc',   label:'Description',       placeholder:'What you did and learned…', span:2 },
+    ]
+  };
+
+  function openModal(type) {
+    modalType = type;
+    document.getElementById('modalTitle').textContent = type === 'education' ? 'Add Education' : 'Add Experience';
+    const fields = MODAL_DEFS[type];
+    let html = '';
+    let i = 0;
+    while (i < fields.length) {
+      const f = fields[i];
+      if (f.span === 2) {
+        html += `<div class="modal-field"><label class="modal-label">${f.label}</label><input class="modal-input" id="mf_${f.key}" placeholder="${f.placeholder}"></div>`;
+        i++;
+      } else if (fields[i+1] && !fields[i+1].span) {
+        const g = fields[i+1];
+        html += `<div class="modal-row"><div class="modal-field"><label class="modal-label">${f.label}</label><input class="modal-input" id="mf_${f.key}" placeholder="${f.placeholder}"></div><div class="modal-field"><label class="modal-label">${g.label}</label><input class="modal-input" id="mf_${g.key}" placeholder="${g.placeholder}"></div></div>`;
+        i += 2;
+      } else {
+        html += `<div class="modal-field"><label class="modal-label">${f.label}</label><input class="modal-input" id="mf_${f.key}" placeholder="${f.placeholder}"></div>`;
+        i++;
+      }
+    }
+    document.getElementById('modalFields').innerHTML = html;
+    document.getElementById('modalBg').classList.add('open');
+    document.getElementById('mf_' + fields[0].key).focus();
+  }
+
+  function closeModal() {
+    document.getElementById('modalBg').classList.remove('open');
+    modalType = null;
+  }
+
+  function bgClick(e) { if (e.target === document.getElementById('modalBg')) closeModal(); }
+
+  function submitModal() {
+    const fields = MODAL_DEFS[modalType];
+    const entry  = {};
+    fields.forEach(f => { entry[f.key] = document.getElementById('mf_' + f.key).value.trim(); });
+    const firstKey = fields[0].key;
+    if (!entry[firstKey]) { document.getElementById('mf_' + firstKey).focus(); return; }
+    profile[modalType].push(entry);
+    renderList(modalType);
+    closeModal();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('modalBg').classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') submitModal();
+  });
+</script>
 </body>
 </html>
