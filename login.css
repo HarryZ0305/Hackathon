@@ -1,0 +1,120 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgb(218, 226, 240), rgb(196, 210, 230));
+    font-family: verdana, sans-serif;
+    color: rgb(51, 67, 80);
+}
+
+.login-wrapper {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 80px 30px;
+    text-align: center;
+}
+
+.login-wrapper h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 56px;
+    margin: 0 0 10px;
+}
+
+.subtitle {
+    margin: 0 0 40px;
+    color: rgb(100, 115, 130);
+    font-size: 16px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.login-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.login-form input {
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 1px solid #cfd6e0;
+    border-radius: 8px;
+    background: white;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-form input:focus {
+    border-color: rgb(51, 67, 80);
+    box-shadow: 0 0 0 3px rgba(51, 67, 80, 0.12);
+}
+
+.login-form button {
+    margin-top: 10px;
+    padding: 14px 32px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    background-color: rgb(51, 67, 80);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(51, 67, 80, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.login-form button:hover {
+    background-color: rgb(71, 90, 105);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(51, 67, 80, 0.35);
+}
+
+.login-form button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(51, 67, 80, 0.25);
+}
+
+.login-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.error {
+    margin: 0;
+    color: #c0392b;
+    font-size: 14px;
+    min-height: 18px;
+}
+
+.switch-mode {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: rgb(100, 115, 130);
+}
+
+.switch-mode a {
+    color: rgb(51, 67, 80);
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.switch-mode a:hover {
+    text-decoration: underline;
+}
