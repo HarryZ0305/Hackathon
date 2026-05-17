@@ -14,7 +14,7 @@ async function askGemini(prompt) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { responseMimeType: 'application/json' }
+            tools: [{ google_search: {} }]
         })
     });
 
@@ -60,19 +60,20 @@ function buildPrompt(profile) {
 
     const now = new Date();
     const today = now.toISOString().slice(0, 10);
-    const twoWeeks = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000)
+    const twoMonths = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000)
         .toISOString().slice(0, 10);
 
-    return `You are an opportunity matcher for me. Recommend 5 relevant opportunities
-(competitions, summer programs, internships, scholarships, hackathons, volunteer roles,
-clubs, or events) that fit my profile below. Prefer well-known, recurring programs that
-are likely to actually exist.
+    return `You are an opportunity matcher for me. Use Google Search to find 5 REAL,
+currently-open opportunities (competitions, summer programs, internships, scholarships,
+hackathons, volunteer roles, clubs, or events) that fit my profile below. Every item
+must be a real opportunity you verified via search results — do NOT invent any.
 
-DEADLINE CONSTRAINT (very important): Today is ${today}. Only include opportunities whose
-APPLICATION DEADLINE (not event date) falls between today and ${twoWeeks} (the next 14
-days, inclusive). Skip anything whose application window has already closed or whose
-deadline is more than 2 weeks away. The "data" field below must reflect the APPLICATION
-DEADLINE, not the event date.
+DEADLINE CONSTRAINT (very important): Today is ${today}. Search the web to find each
+opportunity's actual APPLICATION DEADLINE (not event date), and ONLY include ones whose
+deadline falls between today and ${twoMonths} (the next 60 days, inclusive). Skip
+anything whose application window has already closed, or whose deadline is more than
+60 days away, or whose deadline you cannot verify. The "data" field must show the real
+APPLICATION DEADLINE you found, not a guess.
 
 ${zip || state ? `LOCATION PRIORITY: ${state ? `I'm in ${state}.` : ''} ${zip ? `My ZIP code is ${zip}.` : ''}
 Prefer in-person opportunities within driving distance of ${zip || state}. At least 3 of
@@ -81,7 +82,7 @@ the 5 should be in-person in/near ${zip || state}; up to 2 may be online.` :
 
 Return ONLY a JSON array. Each item must have EXACTLY these three string fields:
 - "title": the program / event name
-- "data": format as "Apply by Month Date • City, State" for in-person, or "Apply by Month Date • Online" for virtual. The date must be the APPLICATION DEADLINE and must fall within the next 14 days from ${today}.
+- "data": format as "Apply by Month Date • City, State" for in-person, or "Apply by Month Date • Online" for virtual. The date must be the APPLICATION DEADLINE and must fall within the next 60 days from ${today}.
 - "description": 2-3 sentences written in SECOND PERSON addressed to me (use "you" and "your", never "he/she/the student"). Explain what the opportunity is, when the event takes place, and why YOU would be a good fit.
 
 Do not include any other prose outside the JSON.
