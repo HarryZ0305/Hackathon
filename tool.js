@@ -1,53 +1,108 @@
-const opportunities = [
-    { 
-        title: "Event 1 Name", 
-        data: "Month Date • City, State or Online", 
-        description: "Description 1" 
-    },
-    { 
-        title: "Event 2 Name", 
-        data: "Month Date • City, State or Online", 
-        description: "Description 2" 
-    },
-    { 
-        title: "Event 3 Name", 
-        data: "Month Date • City, State or Online", 
-        description: "Description 3" 
-    }
-];
+import { db } from './firebase.js';
+import { ref, get }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-let index = 0;
+const GEMINI_API_KEY = 'AIzaSyD528ZLpj7BageBvFPdFC8rcnQMCXmXFKw';
+const GEMINI_MODEL = 'gemini-2.5-flash';
+
+async function askGemini(prompt) {
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/'
+        + GEMINI_MODEL + ':generateContent?key=' + GEMINI_API_KEY;
+
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { responseMimeType: 'application/json' }
+        })
+    });
+
+    const json = await res.json();
+    return json.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+}
+
+function buildPrompt(profile) {
+    return `You are an opportunity matcher for students. Given the student profile below,
+recommend 5 real, relevant opportunities (competitions, summer programs, internships,
+scholarships, hackathons, volunteer roles, or clubs) that fit them.
+
+Return ONLY a JSON array. Each item must have EXACTLY these three string fields:
+- "title": the program / event name
+- "data": format as "Month Date • City, State" or "Month Date • Online" (use a realistic upcoming date)
+- "description": 2-3 sentences explaining what it is and why it fits this student
+
+Do not include any other text, markdown, or explanation outside the JSON.
+
+Student profile:
+- Name: ${profile.fullName || 'unspecified'}
+- Grade / Year: ${profile.gradeYear || 'unspecified'}
+- Bio: ${profile.bio || 'unspecified'}
+- Education: ${profile.education || 'unspecified'}
+- Experience: ${profile.experience || 'unspecified'}
+- Skills: ${profile.skills || 'unspecified'}
+- Interests: ${profile.interests || 'unspecified'}`;
+}
 
 const titleElement = document.getElementById('title');
 const dataElement = document.getElementById('data');
 const descriptionElement = document.getElementById('description');
-
 const nextButton = document.getElementById('nextBtn');
-
 const content = document.getElementById('content');
 
+let opportunities = [{
+    title: 'Loading...',
+    data: 'Fetching recommendations',
+    description: 'Asking Gemini for opportunities tailored to your profile.'
+}];
+let index = 0;
+
+function render() {
+    titleElement.textContent = opportunities[index].title;
+    dataElement.textContent = opportunities[index].data;
+    descriptionElement.textContent = opportunities[index].description;
+}
+
+render();
+
 nextButton.addEventListener('click', function() {
-    
     content.className = 'slide-left';
     setTimeout(function() {
-
-        index++;
-        if (index >= opportunities.length) {
-            index = 0;
-        }
-    
-        titleElement.textContent = opportunities[index].title;
-        dataElement.textContent = opportunities[index].data;
-        descriptionElement.textContent = opportunities[index].description;
-
+        index = (index + 1) % opportunities.length;
+        render();
         content.className = 'slide-next';
-
-        setTimeout(function() {
-            content.className = 'visible';
-        }, 50);
+        setTimeout(function() { content.className = 'visible'; }, 50);
     }, 300);
 });
 
-titleElement.textContent = opportunities[index].title;
-dataElement.textContent = opportunities[index].data;
-descriptionElement.textContent = opportunities[index].description;
+(async function init() {
+    const username = sessionStorage.getItem('username');
+    if (!username) {
+        window.location.href = 'login.html?redirect=tool.html';
+        return;
+    }
+
+    try {
+        const snap = await get(ref(db, 'users/' + username));
+        const profile = snap.exists() ? snap.val() : {};
+
+        const prompt = buildPrompt(profile);
+        const reply = await askGemini(prompt);
+        console.log('Gemini raw reply:', reply);
+
+        const parsed = JSON.parse(reply);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+            opportunities = parsed;
+            index = 0;
+            render();
+        }
+    } catch (err) {
+        console.error('Failed to fetch opportunities:', err);
+        opportunities = [{
+            title: 'Could not load',
+            data: 'Try again later',
+            description: err.message
+        }];
+        render();
+    }
+})();
