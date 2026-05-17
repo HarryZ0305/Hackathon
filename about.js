@@ -1,31 +1,50 @@
-import { auth, db } from './firebase.js';
-import { onAuthStateChanged }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { doc, getDoc, setDoc }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { db } from './firebase.js';
+import { ref, get, update }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const fields = ['education', 'experience', 'skills', 'interests'];
+const fields = ['fullName', 'gradeYear', 'bio', 'education', 'experience', 'skills', 'interests'];
+const status = document.getElementById('status');
+const saveBtn = document.getElementById('saveBtn');
+const logoutBtn = document.getElementById('logoutBtn');
 
-onAuthStateChanged(auth, async function(user) {
-    if (!user) {
-        window.location.href = 'login.html?redirect=about.html';
-        return;
-    }
+const username = sessionStorage.getItem('username');
+if (!username) {
+    window.location.href = 'login.html?redirect=about.html';
+}
 
-    const userRef = doc(db, 'users', user.uid);
-    const snap = await getDoc(userRef);
-    const data = snap.exists() ? snap.data() : {};
+const userRef = ref(db, 'users/' + username);
 
+(async function load() {
+    const snap = await get(userRef);
+    const data = snap.exists() ? snap.val() : {};
     fields.forEach(function(name) {
-        const el = document.querySelector('[data-field="' + name + '"]');
-        if (el && data[name]) {
-            el.textContent = data[name];
-        }
-
-        if (el) {
-            el.addEventListener('blur', async function() {
-                await setDoc(userRef, { [name]: el.textContent.trim() }, { merge: true });
-            });
-        }
+        const el = document.getElementById(name);
+        if (el && data[name]) el.value = data[name];
     });
+})();
+
+saveBtn.addEventListener('click', async function() {
+    saveBtn.disabled = true;
+    status.style.color = 'green';
+    status.textContent = 'Saving...';
+
+    const payload = {};
+    fields.forEach(function(name) {
+        payload[name] = document.getElementById(name).value.trim();
+    });
+
+    try {
+        await update(userRef, payload);
+        status.textContent = 'Saved.';
+    } catch (err) {
+        status.style.color = 'red';
+        status.textContent = 'Save failed: ' + err.message;
+    } finally {
+        saveBtn.disabled = false;
+    }
+});
+
+logoutBtn.addEventListener('click', function() {
+    sessionStorage.removeItem('username');
+    window.location.href = 'index.html';
 });
