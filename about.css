@@ -160,7 +160,6 @@
     .entry:hover .entry-del { color: var(--muted); }
     .entry-del:hover { color: var(--danger) !important; background: rgba(168,50,50,0.08); }
 
-    /* CHIPS */
     .chips-area { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
     .chip {
       display: inline-flex; align-items: center; gap: 6px;
